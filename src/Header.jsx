@@ -10,7 +10,6 @@ export default function Header() {
         <img src={Logo} alt="Logo" />
         <h1>Pitstop Portal</h1>
       </div>
-      <Nav/>
     </div>
   )
 }
