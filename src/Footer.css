@@ -1,0 +1,22 @@
+footer{
+	background-color: #161616;
+	--color: #eeeeee;
+    color: var(--color);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+    column-gap: 40px;
+	padding: 10px;
+	font-size: 20px;
+	text-align: center;
+}
+
+.fa-github {
+    color: var(--color);
+	font-size: 40px;
+	transition: transform 0.3s ease-in-out;
+}
+
+.fa-github:hover {
+	transform: rotate(360deg) scale(1.2);
+}

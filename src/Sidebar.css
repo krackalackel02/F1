@@ -1,5 +1,22 @@
 .sidebar-list{
     display: flex;
     flex-direction: column;
-    align-items: start;
+    align-items: center;
+    list-style: none;
+}
+h3{
+    text-align: center;
+    font-size: 1.5rem;
+    padding: 5px 10px;
+}
+.sidebar-wrapper{
+}
+@media screen and (max-width:500px) {
+    .sidebar-list{
+        flex-direction: column;
+    }
+    .sidebar-wrapper{
+        height: auto;
+        flex-grow: 0;
+    }
 }
