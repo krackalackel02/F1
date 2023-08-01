@@ -6,7 +6,9 @@ import "./Races.css";
 async function searchImage(searchTerm) {
 	try {
 		const response = await fetch(
-			`https://source.unsplash.com/featured/?${encodeURIComponent(searchTerm)}`
+			`https://source.unsplash.com/featured/?${encodeURIComponent(searchTerm)}`, {
+				mode: 'cors'
+			  }
 		);
 
 		if (response.ok) {
