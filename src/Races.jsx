@@ -36,7 +36,7 @@ export default function Races({ activeTab }) {
 	const [loading, setLoading] = useState(true);
 
 	useEffect(() => {
-		const URL = `http://ergast.com/api/f1/${season}.json`;
+		const URL = `https://ergast.com/api/f1/${season}.json`;
 		fetch(URL, {
 			mode: 'cors'
 		  })
