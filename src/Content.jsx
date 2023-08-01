@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useEffect} from "react";
 import Home from "./Home.jsx";
 import Drivers from "./Drivers.jsx";
 import Circuits from "./Circuits.jsx";
@@ -8,7 +8,9 @@ import Contact from "./Contact.jsx";
 import "./Content.css";
 
 export default function Content({ activeTab }) {
+	
 	return (
+		
 		<div className="content-wrapper">
 			{(() => {
 				switch (activeTab) {
