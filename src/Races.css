@@ -25,12 +25,11 @@
 	--icon-width: clamp(50px, 1vw, 70px);
 	--card-padding: 20px;
 	--border-radius: calc(0.5 * var(--icon-width));
-	--heading-font-size: 4rem;
+	--card-heading-font-size: 3rem;
 	position: relative;
 	width: var(--card-width);
 	height: auto;
 	aspect-ratio: 2/3;
-	padding: var(--card-padding);
 	color: white;
 	background-color: transparent;
 	border-radius: var(--border-radius);
@@ -62,14 +61,19 @@
 	align-items: center;
 	padding: 30px;
 }
-.race-card h3 {
+.race-header,
+#season-select {
+	--heading-font-size: 4rem;
+	font-size: var(--heading-font-size);
+}
+.race-card-title {
 	display: flex;
 	align-items: center;
 	flex-wrap: wrap;
 	position: relative;
 	padding-bottom: var(--card-padding);
 }
-.race-card h3::after {
+.race-card-title::after {
 	content: "";
 	position: absolute;
 	left: calc(var(--card-padding) * -0.5);
@@ -80,19 +84,39 @@
 	border-radius: var(--border-radius);
 	z-index: -1;
 }
-.race-card h3 span {
-	font-size: calc(0.5 * var(--heading-font-size));
+.race-card-title span {
+	font-size: calc(0.5 * var(--card-heading-font-size));
 	margin-left: var(--icon-width);
+}
+.race-card h4  {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	font-size: calc(0.5 * var(--card-heading-font-size));
+}
+.race-card h4 div {
+	font-style: italic;
 }
 .race-card svg {
 	height: var(--icon-width);
+	font-size: var(--card-heading-font-size);
 	width: var(--icon-width);
-	font-size: var(--heading-font-size);
 	position: absolute;
 	top: 0;
+	top: calc(var(--card-padding) * -0.25);
 	left: 0;
 }
-
+.race-card-content {
+	padding: var(--card-padding);
+}
+.results{
+	display: flex;
+	align-items: center;
+	justify-content: end;
+}
+.results button{
+	font-size: calc(0.5 * var(--card-heading-font-size));
+}
 @media screen and (max-width: 700px) {
 	.race-card {
 		--card-width: clamp(300px, 80vw, 400px);

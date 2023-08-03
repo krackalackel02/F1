@@ -6,15 +6,16 @@ import "./Races.css";
 async function searchImage(searchTerm) {
 	try {
 		const response = await fetch(
-			`https://source.unsplash.com/featured/?${encodeURIComponent(searchTerm)}`, {
-				mode: 'cors'
-			  }
+			`https://source.unsplash.com/featured/?${encodeURIComponent(searchTerm)}`,
+			{
+				mode: "cors",
+			}
 		);
 
 		if (response.ok) {
-			return response.url; // The URL of the first matching image
+			return response.url;
 		} else {
-			return "https://d3cm515ijfiu6w.cloudfront.net/wp-content/uploads/2018/12/04132754/Sergio_Perez11111111111.jpeg"; // If no image is found for the search term or there's an error
+			return "https://d3cm515ijfiu6w.cloudfront.net/wp-content/uploads/2018/12/04132754/Sergio_Perez11111111111.jpeg";
 		}
 	} catch (error) {
 		console.error("Error fetching image from Unsplash Source:", error);
@@ -29,17 +30,24 @@ const formatDate = (dateString) => {
 	return formattedDate;
 };
 
-export default function Races({ activeTab }) {
+export default function Races({
+	activeTab,
+	setActiveTab,
+	activeRace,
+	setActiveRace,
+	season,
+	setSeason,
+	loading,
+	setLoading,
+}) {
 	const [raceTable, setRaceTable] = useState(null);
 	const [races, setRaces] = useState([]);
-	const [season, setSeason] = useState("current");
-	const [loading, setLoading] = useState(true);
 
 	useEffect(() => {
 		const URL = `https://ergast.com/api/f1/${season}.json`;
 		fetch(URL, {
-			mode: 'cors'
-		  })
+			mode: "cors",
+		})
 			.then((result) => {
 				return result.json();
 			})
@@ -100,7 +108,6 @@ export default function Races({ activeTab }) {
 		};
 	}, [raceTable]);
 
-	// Generate an array of years from the current year to 1970
 	const years = [];
 	const currentYear = new Date().getFullYear();
 	for (let year = currentYear; year >= 1970; year--) {
@@ -108,48 +115,54 @@ export default function Races({ activeTab }) {
 	}
 	return (
 		<div>
-			<h2>Races</h2>
-			<select
-				name="season"
-				id="season-select"
-				onChange={(e) => setSeason(e.target.value)}
-				value={season}
-			>
-				{years.map((year) => (
-					<option key={year} value={year}>
-						{year}
-					</option>
-				))}
-			</select>
+			<h2 className="race-header">
+				Season:
+				<select
+					name="season"
+					id="season-select"
+					onChange={(e) => {
+						setSeason(e.target.value);
+						setActiveRace({ ...activeRace, season: season });
+					}}
+					value={season}
+				>
+					{years.map((year) => (
+						<option key={year} value={year}>
+							{year}
+						</option>
+					))}
+				</select>
+			</h2>
 			{!loading ? (
 				<div className="card-list">
 					{races.map((race) => (
 						<div key={race.id} className="race-card">
 							<img src={race.img} alt="" className="race-card-image" />
 							<div className="race-card-content">
-								<h3>
+								<h3 className="race-card-title">
 									<CircleWithText raceId={race.id} />
 
 									<span>{race.name}</span>
 								</h3>
-								<h4>{race.circuit}</h4>
+								<h4>
+									Track: <div>{race.circuit}</div>
+								</h4>
 								<div>
 									{/* Iterate through each event and display its details */}
 									{Object.entries(race.events).map(([eventKey, eventValue]) => {
-										// Use regular expression to split eventKey into words and add spaces
 										const formattedEventKey = eventKey
 											.replace(/([A-Z])/g, " $1")
 											.trim();
-										// Parse the time using Date object and format it
+
 										const formattedTime = new Date(
 											`1970-01-01T${eventValue.time}`
 										).toLocaleTimeString([], {
 											hour: "numeric",
 											minute: "2-digit",
 											hour12: true,
-											timeZoneName: "short", // Include the time zone abbreviation
+											timeZoneName: "short",
 										});
-										// Format the date using the helper function
+
 										const formattedDate = formatDate(eventValue.date);
 										return (
 											<div key={eventKey}>
@@ -161,6 +174,20 @@ export default function Races({ activeTab }) {
 											</div>
 										);
 									})}
+								</div>
+								<div className="results">
+									<button
+										onClick={() => {
+											setActiveRace({
+												season: season,
+												round: race.id,
+												seasonLength: races[races.length - 1].id,
+											});
+											setActiveTab("results");
+										}}
+									>
+										go to Results
+									</button>
 								</div>
 							</div>
 						</div>
