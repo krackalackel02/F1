@@ -21,6 +21,8 @@ export default function App() {
 		round: 1,
 		seasonLength: 22,
 	});
+	console.log(activeRace);
+
 	return (
 		<div className="container">
 			<Header />

@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useRef } from "react";
 import Loading from "./assets/loading.svg";
 
-async function getRoundLength(season, setActiveRace, activeRaceRef) {
+async function getRoundLength(season, setActiveRace, activeRaceRef, round) {
 	try {
-		const URL = `https://ergast.com/api/f1/${season}.json`;
+		const URL = `https://ergast.com/api/f1/${activeRaceRef.current.season}.json`;
 		const data = await fetch(URL, {
 			mode: "cors",
 		});
@@ -39,34 +39,38 @@ export default function Results({
 			activeRace.season !== prevSeason.current ||
 			activeRace.round !== prevRound.current
 		) {
-			console.log("renderpag");
 			// Perform the API call only if season or round has changed
-			getRoundLength(activeRace.season, setActiveRace, activeRaceRef).catch(
-				(error) => console.error("Error setting season length:", error)
-			);
-			fetch(
-				`https://ergast.com/api/f1/${activeRace.season}/${activeRace.round}/results.json`,
-				{ mode: "cors" }
+			setLoading(true); // Set loading to true before making API calls
+			getRoundLength(
+				activeRace.season,
+				setActiveRace,
+				activeRaceRef,
+				activeRace.round
 			)
-				.then((res) => res.json())
-				.then((result) => {
-					setResult(JSON.stringify(result));
-					setLoading(false);
+				.then(() => {
+					fetch(
+						`https://ergast.com/api/f1/${activeRace.season}/${activeRace.round}/results.json`,
+						{ mode: "cors" }
+					)
+						.then((res) => res.json())
+						.then((result) => {
+							setResult(JSON.stringify(result));
+							setLoading(false); // Set loading to false once data is fetched and processed
+							prevSeason.current = activeRace.season;
+							prevRound.current = activeRace.round;
+						})
+						.catch((err) => {
+							console.error(err);
+							setLoading(false); // Set loading to false in case of error as well
+						});
 				})
-				.catch((err) => {
-					console.error(err);
-				});
-			prevSeason.current = activeRace.season;
-			prevRound.current = activeRace.round;
+				.catch((error) => console.error("Error setting season length:", error));
+
 		}
-		return () => {
-			setLoading(true);
-		};
 	}, [activeRace]);
 	useEffect(() => {
 		activeRaceRef.current = activeRace;
 
-		console.log("renderpag");
 		// Perform the API call only if season or round has changed
 		getRoundLength(activeRace.season, setActiveRace, activeRaceRef).catch(
 			(error) => console.error("Error setting season length:", error)
@@ -77,6 +81,8 @@ export default function Results({
 		)
 			.then((res) => res.json())
 			.then((result) => {
+				console.log(activeRace);
+
 				setResult(JSON.stringify(result));
 				setLoading(false);
 				prevSeason.current = activeRace.season;

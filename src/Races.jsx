@@ -40,6 +40,7 @@ export default function Races({
 	loading,
 	setLoading,
 }) {
+	console.log(activeRace);
 	const [raceTable, setRaceTable] = useState(null);
 	const [races, setRaces] = useState([]);
 
@@ -52,6 +53,11 @@ export default function Races({
 				return result.json();
 			})
 			.then((data) => {
+				setActiveRace({
+					...activeRace,
+					season: season,
+					seasonLength: data["MRData"]["total"],
+				});
 				setRaceTable(data["MRData"]["RaceTable"]);
 			})
 			.catch((err) => {
@@ -122,7 +128,7 @@ export default function Races({
 					id="season-select"
 					onChange={(e) => {
 						setSeason(e.target.value);
-						setActiveRace({ ...activeRace, season: season });
+						setActiveRace({ ...activeRace, season: e.target.value }); // Fix this line to use e.target.value for season
 					}}
 					value={season}
 				>

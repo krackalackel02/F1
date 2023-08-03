@@ -14,6 +14,8 @@ export default function Content({
 	activeRace,
 	setActiveRace,
 }) {
+	console.log(activeRace);
+
 	const [season, setSeason] = useState("2023");
 	const [loading, setLoading] = useState(true);
 
@@ -37,6 +39,7 @@ export default function Content({
 								setSeason={setSeason}
 								activeTab={activeTab}
 								setActiveTab={setActiveTab}
+								activeRace={activeRace} // This line is missing in your code
 								setActiveRace={setActiveRace}
 								loading={loading}
 								setLoading={setLoading}
@@ -47,7 +50,7 @@ export default function Content({
 							<Results
 								loading={loading}
 								setLoading={setLoading}
-								season={activeRace.season}
+								season={season}
 								setSeason={setSeason}
 								activeRace={activeRace}
 								setActiveRace={setActiveRace}
