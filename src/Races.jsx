@@ -1,25 +1,25 @@
 import React, { useEffect, useState } from "react";
 import Loading from "./assets/loading.svg";
+import Placeholder from "./assets/placeholder_track.jpg";
 import CircleWithText from "./CircleWithText";
 import "./Races.css";
 
-async function searchImage(searchTerm) {
+ export async function searchImage(searchTerm,fallback) {
 	try {
-		const response = await fetch(
-			`https://source.unsplash.com/featured/?${encodeURIComponent(searchTerm)}`,
-			{
-				mode: "cors",
-			}
-		);
-
-		if (response.ok) {
-			return response.url;
-		} else {
-			return "https://d3cm515ijfiu6w.cloudfront.net/wp-content/uploads/2018/12/04132754/Sergio_Perez11111111111.jpeg";
-		}
+		const wikipedia = searchTerm;
+		const wikipediaTitle = wikipedia.match(/\/wiki\/(.+)/)[1];
+		const apiUrl = `https://en.wikipedia.org/w/api.php?action=query&titles=${encodeURIComponent(
+			wikipediaTitle
+		)}&prop=pageimages&format=json&pithumbsize=1000&origin=*`;
+		const link = await fetch(apiUrl, { mode: "cors" });
+		const data = await link.json();
+		const pageData = data.query.pages;
+		const pageId = Object.keys(pageData)[0];
+		const imageUrl = pageData[pageId].thumbnail.source;
+		if (!imageUrl) return fallback;
+		return imageUrl;
 	} catch (error) {
-		console.error("Error fetching image from Unsplash Source:", error);
-		return "https://d3cm515ijfiu6w.cloudfront.net/wp-content/uploads/2018/12/04132754/Sergio_Perez11111111111.jpeg";
+		return fallback;
 	}
 }
 
@@ -40,7 +40,6 @@ export default function Races({
 	loading,
 	setLoading,
 }) {
-	console.log(activeRace);
 	const [raceTable, setRaceTable] = useState(null);
 	const [races, setRaces] = useState([]);
 
@@ -74,9 +73,7 @@ export default function Races({
 		const fetchRaceData = async () => {
 			const raceList = await Promise.all(
 				raceTable["Races"].map(async (race) => {
-					const img = await searchImage(
-						race["raceName"].match(/([A-Za-z]*) Grand Prix/)[1]
-					);
+					const img = await searchImage(race["Circuit"]["url"],Placeholder);
 					let isAfterTimeProp = false;
 					const events = Object.entries(race).reduce((acc, [key, value]) => {
 						if (key === "time") {
@@ -128,7 +125,11 @@ export default function Races({
 					id="season-select"
 					onChange={(e) => {
 						setSeason(e.target.value);
-						setActiveRace({ ...activeRace, season: e.target.value }); // Fix this line to use e.target.value for season
+						setActiveRace({
+							...activeRace,
+							season: e.target.value,
+							seasonLength: races[races.length - 1].id,
+						}); // Fix this line to use e.target.value for season
 					}}
 					value={season}
 				>
@@ -185,8 +186,12 @@ export default function Races({
 									<button
 										onClick={() => {
 											setActiveRace({
+												...activeRace,
 												season: season,
 												round: race.id,
+												img: race.img,
+												track: race.circuit,
+												prix: race.name,
 												seasonLength: races[races.length - 1].id,
 											});
 											setActiveTab("results");

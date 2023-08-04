@@ -1,5 +1,32 @@
 import React, { useState, useEffect, useRef } from "react";
 import Loading from "./assets/loading.svg";
+import PlaceholderTrack from "./assets/placeholder_track.jpg";
+import PlaceholderConstructor from "./assets/placeholder_constructor.svg";
+import PlaceholderDriver from "./assets/placeholder_driver.svg";
+import { searchImage } from "./Races.jsx";
+
+async function findWinningDriver(dataCurrent) {
+	const data = dataCurrent["MRData"];
+	const numDrivers = data["total"];
+	const raceTable = data["RaceTable"];
+	const Races = raceTable["Races"];
+	if (!Races.length > 0) return {};
+	let Circuit = Races[0]["Circuit"];
+	let { Driver, Constructor, grid, Time } = Races[0]["Results"][0];
+	const DriverImg = await searchImage(Driver.url, PlaceholderDriver);
+	const ConstructorImg = await searchImage(
+		Constructor.url,
+		PlaceholderConstructor
+	);
+	const CircuitImg = await searchImage(Circuit.url, PlaceholderTrack);
+	return {
+		Driver: { ...Driver, img: DriverImg },
+		Constructor: { ...Constructor, img: ConstructorImg },
+		grid,
+		Time,
+		Circuit: { ...Circuit, img: CircuitImg },
+	};
+}
 
 async function getRoundLength(season, setActiveRace, activeRaceRef, round) {
 	try {
@@ -39,8 +66,7 @@ export default function Results({
 			activeRace.season !== prevSeason.current ||
 			activeRace.round !== prevRound.current
 		) {
-			// Perform the API call only if season or round has changed
-			setLoading(true); // Set loading to true before making API calls
+			setLoading(true);
 			getRoundLength(
 				activeRace.season,
 				setActiveRace,
@@ -54,24 +80,26 @@ export default function Results({
 					)
 						.then((res) => res.json())
 						.then((result) => {
-							setResult(JSON.stringify(result));
-							setLoading(false); // Set loading to false once data is fetched and processed
+							findWinningDriver(result).then((RESULT) => {
+								setResult(JSON.stringify(RESULT, null, 2));
+								setResult(RESULT);
+								setLoading(false);
+							});
+
 							prevSeason.current = activeRace.season;
 							prevRound.current = activeRace.round;
 						})
 						.catch((err) => {
 							console.error(err);
-							setLoading(false); // Set loading to false in case of error as well
+							setLoading(false);
 						});
 				})
 				.catch((error) => console.error("Error setting season length:", error));
-
 		}
 	}, [activeRace]);
+
 	useEffect(() => {
 		activeRaceRef.current = activeRace;
-
-		// Perform the API call only if season or round has changed
 		getRoundLength(activeRace.season, setActiveRace, activeRaceRef).catch(
 			(error) => console.error("Error setting season length:", error)
 		);
@@ -81,10 +109,11 @@ export default function Results({
 		)
 			.then((res) => res.json())
 			.then((result) => {
-				console.log(activeRace);
-
-				setResult(JSON.stringify(result));
-				setLoading(false);
+				findWinningDriver(result).then((RESULT) => {
+					setResult(JSON.stringify(RESULT, null, 2));
+					setResult(RESULT);
+					setLoading(false);
+				});
 				prevSeason.current = activeRace.season;
 				prevRound.current = activeRace.round;
 			})
@@ -118,6 +147,7 @@ export default function Results({
 					onChange={(e) => {
 						setSeason(e.target.value);
 						setActiveRace({
+							...activeRace,
 							season: e.target.value,
 							round: round,
 							seasonLength: activeRace.seasonLength,
@@ -137,6 +167,7 @@ export default function Results({
 					id="round-select"
 					onChange={(e) => {
 						setActiveRace({
+							...activeRace,
 							season: season,
 							round: e.target.value,
 							seasonLength: activeRace.seasonLength,
@@ -152,10 +183,31 @@ export default function Results({
 					))}
 				</select>
 			</h2>
-
 			<div>
 				{!loading ? (
-					result
+					Object.keys(result).length > 0 ? (
+						<>
+							<pre>{JSON.stringify(result, null, 2)}</pre>
+							<div className="winner-card">
+								<img src={result.Circuit.img} alt="" className="Circuit" />
+								<div className="Driver">
+									<img src={result.Driver.img} alt="" />
+									<div>
+										{result.Driver.givenName + " " + result.Driver.familyName}
+									</div>
+								</div>
+								<div className="Constructor">
+									<img src={result.Constructor.img} alt="" />
+									<div>{result.Constructor.name}</div>
+								</div>
+							</div>
+						</>
+					) : (
+						<pre>
+							This race has not happened <br />
+							Stay tuned for restults in the future!
+						</pre>
+					)
 				) : (
 					<div className="loading-wrapper">
 						<img src={Loading} alt="Loading..." className="rotating" />

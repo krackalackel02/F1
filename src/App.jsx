@@ -20,8 +20,10 @@ export default function App() {
 		season: 2023,
 		round: 1,
 		seasonLength: 22,
+		track: "Bahrain International Circuit",
+		prix: "Bahrain Grand Prix",
+		img: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/29/Bahrain_International_Circuit--Grand_Prix_Layout.svg/1000px-Bahrain_International_Circuit--Grand_Prix_Layout.svg.png",
 	});
-	console.log(activeRace);
 
 	return (
 		<div className="container">

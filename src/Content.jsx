@@ -14,8 +14,6 @@ export default function Content({
 	activeRace,
 	setActiveRace,
 }) {
-	console.log(activeRace);
-
 	const [season, setSeason] = useState("2023");
 	const [loading, setLoading] = useState(true);
 

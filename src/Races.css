@@ -26,12 +26,19 @@
 	--card-padding: 20px;
 	--border-radius: calc(0.5 * var(--icon-width));
 	--card-heading-font-size: 3rem;
+	--brightness-value: 0.5;
 	position: relative;
 	width: var(--card-width);
 	height: auto;
 	aspect-ratio: 2/3;
 	color: white;
 	background-color: transparent;
+	background-color: rgba(
+		calc(var(--brightness-value) * 255),
+		calc(var(--brightness-value) * 255),
+		calc(var(--brightness-value) * 255),
+		0.3
+	);
 	border-radius: var(--border-radius);
 	isolation: isolate;
 	flex-grow: 0;
@@ -48,7 +55,7 @@
 	object-fit: cover;
 	width: 100%;
 	height: 100%;
-	filter: brightness(0.5);
+	filter: brightness(var(--brightness-value));
 	z-index: -1;
 }
 
@@ -88,7 +95,7 @@
 	font-size: calc(0.5 * var(--card-heading-font-size));
 	margin-left: var(--icon-width);
 }
-.race-card h4  {
+.race-card h4 {
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
@@ -109,12 +116,12 @@
 .race-card-content {
 	padding: var(--card-padding);
 }
-.results{
+.results {
 	display: flex;
 	align-items: center;
 	justify-content: end;
 }
-.results button{
+.results button {
 	font-size: calc(0.5 * var(--card-heading-font-size));
 }
 @media screen and (max-width: 700px) {
