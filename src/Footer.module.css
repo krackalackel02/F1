@@ -11,12 +11,12 @@
 	text-align: center;
 }
 
-.footer .fa-github {
+.githubIcon {
     color: var(--color);
 	font-size: 40px;
 	transition: transform 0.3s ease-in-out;
 }
 
-.footer .fa-github:hover {
+.githubIcon:hover {
 	transform: rotate(360deg) scale(1.2);
 }

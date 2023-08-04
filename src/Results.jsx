@@ -196,14 +196,24 @@ export default function Results({
 									className={styles["Circuit"]}
 								/>
 								<div className={styles["Driver"]}>
-									<img src={result.Driver.img} alt="" />
-									<div>
-										{result.Driver.givenName + " " + result.Driver.familyName}
+									<div className={styles["Driver-Profile"]}>
+										<img src={result.Driver.img} alt="" />
+									</div>
+									<div className={styles["Driver-Content"]}>
+										<div className="winner-type">Driver:</div>
+										<div className="winner-name">
+											{result.Driver.givenName + " " + result.Driver.familyName}
+										</div>
 									</div>
 								</div>
 								<div className={styles["Constructor"]}>
-									<img src={result.Constructor.img} alt="" />
-									<div>{result.Constructor.name}</div>
+									<div className={styles["Constructor-Profile"]}>
+										<img src={result.Constructor.img} alt="" />
+									</div>
+									<div className={styles["Constructor-Content"]}>
+										<div className="winner-type">Constructor:</div>
+										<div className="winner-name">{result.Constructor.name}</div>
+									</div>
 								</div>
 							</div>
 						</>

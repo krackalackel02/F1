@@ -3,3 +3,71 @@
 	--heading-font-size: 3rem;
 	font-size: var(--heading-font-size);
 }
+
+.winner-card {
+	--card-width: clamp(300px, 90vw, 450px);
+	--icon-width: clamp(75px, 1vw, 100px);
+	--card-padding: 20px;
+	--border-radius: calc(0.5 * var(--icon-width));
+	--card-heading-font-size: 3rem;
+	--brightness-value: 0.5;
+	padding: var(--card-padding);
+	flex-direction: column;
+	display: flex;
+	row-gap: var(--card-padding);
+	margin: 0 auto;
+	position: relative;
+	width: var(--card-width);
+	border-radius: var(--border-radius);
+}
+.winner-card > img {
+	position: absolute;
+	top: 0;
+	left: 0;
+	object-fit: fill;
+	height: 100%;
+	width: 100%;
+}
+.Driver-Profile {
+	height: 75px;
+	width: 75px;
+	position: relative;
+	border-radius: 50%;
+	background-color: white;
+}
+.Driver-Profile > img {
+	position: absolute;
+	top: 0;
+	left: 0;
+	object-fit: cover;
+	height: 100%;
+	width: 100%;
+	border-radius: 50%;
+}
+.Constructor-Profile {
+	height: 75px;
+	width: 75px;
+	position: relative;
+	border-radius: 50%;
+	background-color: white;
+}
+.Constructor-Profile > img {
+	position: absolute;
+	top: 0;
+	left: 0;
+	border-radius: 50%;
+	object-fit: cover;
+	height: 100%;
+	width: 100%;
+}
+
+.Driver-Content,
+.Constructor-Content {
+	display: flex;
+	flex-direction: column;
+	align-items: start;
+}
+.Driver,
+.Constructor {
+	display: flex;
+}
