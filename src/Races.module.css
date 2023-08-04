@@ -69,7 +69,7 @@
 	padding: 30px;
 }
 .race-header,
-#season-select {
+.race-header select {
 	--heading-font-size: 4rem;
 	font-size: var(--heading-font-size);
 }

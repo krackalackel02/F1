@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import "./App.css";
+import styles from "./App.module.css";
 import Header from "./Header.jsx";
 import Footer from "./Footer.jsx";
 import Content from "./Content.jsx";
@@ -26,7 +26,7 @@ export default function App() {
 	});
 
 	return (
-		<div className="container">
+		<div className={styles.container}>
 			<Header />
 			<main>
 				<Sidebar setActiveTab={setActiveTab} />

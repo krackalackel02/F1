@@ -5,8 +5,8 @@ import Circuits from "./Circuits.jsx";
 import Races from "./Races.jsx";
 import Results from "./Results.jsx";
 import Contact from "./Contact.jsx";
-import Loading from "./assets/loading.svg";
-import "./Content.css";
+import Loading from "./Loading.jsx";
+import styles from "./Content.module.css";
 
 export default function Content({
 	activeTab,
@@ -18,7 +18,7 @@ export default function Content({
 	const [loading, setLoading] = useState(true);
 
 	return (
-		<div className="content-wrapper">
+		<div className={styles["content-wrapper"]}>
 			{(() => {
 				switch (activeTab) {
 					case "home":

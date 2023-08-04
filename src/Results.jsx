@@ -1,9 +1,10 @@
 import React, { useState, useEffect, useRef } from "react";
-import Loading from "./assets/loading.svg";
 import PlaceholderTrack from "./assets/placeholder_track.jpg";
 import PlaceholderConstructor from "./assets/placeholder_constructor.svg";
 import PlaceholderDriver from "./assets/placeholder_driver.svg";
 import { searchImage } from "./Races.jsx";
+import styles from "./Results.module.css";
+import Loading from "./Loading.jsx";
 
 async function findWinningDriver(dataCurrent) {
 	const data = dataCurrent["MRData"];
@@ -139,7 +140,7 @@ export default function Results({
 
 	return (
 		<div>
-			<h2 className="results-header">
+			<h2 className={styles["results-header"]}>
 				<span>Season:</span>
 				<select
 					name="season"
@@ -185,33 +186,32 @@ export default function Results({
 			</h2>
 			<div>
 				{!loading ? (
-					Object.keys(result).length > 0 ? (
+					result && Object.keys(result).length > 0 ? (
 						<>
 							<pre>{JSON.stringify(result, null, 2)}</pre>
-							<div className="winner-card">
-								<img src={result.Circuit.img} alt="" className="Circuit" />
-								<div className="Driver">
+							<div className={styles["winner-card"]}>
+								<img
+									src={result.Circuit.img}
+									alt=""
+									className={styles["Circuit"]}
+								/>
+								<div className={styles["Driver"]}>
 									<img src={result.Driver.img} alt="" />
 									<div>
 										{result.Driver.givenName + " " + result.Driver.familyName}
 									</div>
 								</div>
-								<div className="Constructor">
+								<div className={styles["Constructor"]}>
 									<img src={result.Constructor.img} alt="" />
 									<div>{result.Constructor.name}</div>
 								</div>
 							</div>
 						</>
 					) : (
-						<pre>
-							This race has not happened <br />
-							Stay tuned for restults in the future!
-						</pre>
+						<pre>Stay tuned for results in the future!</pre>
 					)
 				) : (
-					<div className="loading-wrapper">
-						<img src={Loading} alt="Loading..." className="rotating" />
-					</div>
+					<Loading />
 				)}
 			</div>
 		</div>

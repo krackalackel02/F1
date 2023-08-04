@@ -1,0 +1,20 @@
+.sidebar-list {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	list-style: none;
+}
+.sidebar-wrapper h3 {
+	text-align: center;
+	font-size: 1.5rem;
+	padding: 5px 10px;
+}
+@media screen and (max-width: 700px) {
+	.sidebar-list {
+		flex-direction: column;
+	}
+	.sidebar-wrapper {
+		height: auto;
+		flex-grow: 0;
+	}
+}

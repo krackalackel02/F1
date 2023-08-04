@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import Loading from "./assets/loading.svg";
+import Loading from "./Loading.jsx";
 import Placeholder from "./assets/placeholder_track.jpg";
 import CircleWithText from "./CircleWithText";
-import "./Races.css";
+import styles from "./Races.module.css";
 
  export async function searchImage(searchTerm,fallback) {
 	try {
@@ -118,7 +118,7 @@ export default function Races({
 	}
 	return (
 		<div>
-			<h2 className="race-header">
+			<h2 className={styles["race-header"]}>
 				Season:
 				<select
 					name="season"
@@ -141,12 +141,12 @@ export default function Races({
 				</select>
 			</h2>
 			{!loading ? (
-				<div className="card-list">
+				<div className={styles["card-list"]}>
 					{races.map((race) => (
-						<div key={race.id} className="race-card">
-							<img src={race.img} alt="" className="race-card-image" />
-							<div className="race-card-content">
-								<h3 className="race-card-title">
+						<div key={race.id} className={styles["race-card"]}>
+							<img src={race.img} alt="" className={styles["race-card-image"]} />
+							<div className={styles["race-card-content"]}>
+								<h3 className={styles["race-card-title"]}>
 									<CircleWithText raceId={race.id} />
 
 									<span>{race.name}</span>
@@ -182,7 +182,7 @@ export default function Races({
 										);
 									})}
 								</div>
-								<div className="results">
+								<div className={styles["results"]}>
 									<button
 										onClick={() => {
 											setActiveRace({
@@ -205,9 +205,7 @@ export default function Races({
 					))}
 				</div>
 			) : (
-				<div className="loading-wrapper">
-					<img src={Loading} alt="Loading..." className="rotating" />
-				</div>
+				<Loading />
 			)}
 		</div>
 	);

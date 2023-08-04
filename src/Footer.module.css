@@ -1,4 +1,4 @@
-footer{
+.footer{
 	background-color: #161616;
 	--color: #eeeeee;
     color: var(--color);
@@ -11,12 +11,12 @@ footer{
 	text-align: center;
 }
 
-.fa-github {
+.footer .fa-github {
     color: var(--color);
 	font-size: 40px;
 	transition: transform 0.3s ease-in-out;
 }
 
-.fa-github:hover {
+.footer .fa-github:hover {
 	transform: rotate(360deg) scale(1.2);
 }

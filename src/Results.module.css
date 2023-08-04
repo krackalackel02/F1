@@ -1,0 +1,5 @@
+.results-header,
+.results-header select {
+	--heading-font-size: 3rem;
+	font-size: var(--heading-font-size);
+}
