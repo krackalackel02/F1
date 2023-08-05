@@ -12,13 +12,26 @@
 	--card-heading-font-size: 3rem;
 	--brightness-value: 0.5;
 	padding: var(--card-padding);
-	flex-direction: column;
+	flex-direction: row;
 	display: flex;
 	row-gap: var(--card-padding);
 	margin: 0 auto;
 	position: relative;
 	width: var(--card-width);
 	border-radius: var(--border-radius);
+	background-color: rgba(
+		calc(var(--brightness-value) * 0.25 * 255),
+		calc(var(--brightness-value) * 0.25 * 255),
+		calc(var(--brightness-value) * 0.25 * 255),
+		0.5
+	);
+	isolation: isolate;
+	color: white;
+}
+.Winner {
+	display: flex;
+	flex-direction: column;
+	flex-grow: 1;
 }
 .winner-card > img {
 	position: absolute;
@@ -27,6 +40,8 @@
 	object-fit: fill;
 	height: 100%;
 	width: 100%;
+	filter: brightness(var(--brightness-value));
+	z-index: -1;
 }
 .Driver-Profile {
 	height: 75px;
@@ -43,6 +58,7 @@
 	height: 100%;
 	width: 100%;
 	border-radius: 50%;
+	flex-grow: 0;
 }
 .Constructor-Profile {
 	height: 75px;
@@ -59,6 +75,7 @@
 	object-fit: cover;
 	height: 100%;
 	width: 100%;
+	flex-grow: 0;
 }
 
 .Driver-Content,
@@ -66,8 +83,12 @@
 	display: flex;
 	flex-direction: column;
 	align-items: start;
+	flex-grow: 1;
 }
 .Driver,
 .Constructor {
 	display: flex;
+}
+.Data{
+	flex-grow: 0;
 }

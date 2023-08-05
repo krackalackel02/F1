@@ -1,5 +1,5 @@
 .rotating {
-	animation: rotateAnimation 1s infinite linear;
+	animation: rotateAnimation 1s infinite ease-in-out;
 }
 .loading-wrapper {
 	display: flex;

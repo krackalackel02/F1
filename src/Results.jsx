@@ -197,25 +197,33 @@ export default function Results({
 									alt=""
 									className={styles["Circuit"]}
 								/>
-								<div className={styles["Driver"]}>
-									<div className={styles["Driver-Profile"]}>
-										<img src={result.Driver.img} alt="" />
+								<div className="Winner">
+									<div className={styles["Driver"]}>
+										<div className={styles["Driver-Profile"]}>
+											<img src={result.Driver.img} alt="" />
+										</div>
+										<div className={styles["Driver-Content"]}>
+											<div className={styles["winner-type"]}>Driver:</div>
+											<div className={styles["winner-name"]}>
+												{result.Driver.givenName + " " + result.Driver.familyName}
+											</div>
+										</div>
 									</div>
-									<div className={styles["Driver-Content"]}>
-										<div className="winner-type">Driver:</div>
-										<div className="winner-name">
-											{result.Driver.givenName + " " + result.Driver.familyName}
+									<div className={styles["Constructor"]}>
+										<div className={styles["Constructor-Profile"]}>
+											<img src={result.Constructor.img} alt="" />
+										</div>
+										<div className={styles["Constructor-Content"]}>
+											<div className={styles["winner-type"]}>Constructor:</div>
+											<div className={styles["winner-name"]}>{result.Constructor.name}</div>
 										</div>
 									</div>
 								</div>
-								<div className={styles["Constructor"]}>
-									<div className={styles["Constructor-Profile"]}>
-										<img src={result.Constructor.img} alt="" />
-									</div>
-									<div className={styles["Constructor-Content"]}>
-										<div className="winner-type">Constructor:</div>
-										<div className="winner-name">{result.Constructor.name}</div>
-									</div>
+								<div className="Data">
+								<div className={styles["Data-Content"]}>
+											<div className={styles["winner-type"]}>Time:</div>
+											<div className={styles["winner-name"]}>{result.Time.time}</div>
+										</div>
 								</div>
 							</div>
 						</>
