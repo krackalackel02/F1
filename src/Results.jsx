@@ -2,7 +2,8 @@ import React, { useState, useEffect, useRef } from "react";
 import PlaceholderTrack from "./assets/placeholder_track.jpg";
 import PlaceholderConstructor from "./assets/placeholder_constructor.svg";
 import PlaceholderDriver from "./assets/placeholder_driver.svg";
-import { searchImage } from "./Races.jsx";
+// import { searchImage } from "./Races.jsx";
+import searchImage from "./seachImage.js";
 import styles from "./Results.module.css";
 import Loading from "./Loading.jsx";
 
@@ -14,12 +15,13 @@ async function findWinningDriver(dataCurrent) {
 	if (!Races.length > 0) return {};
 	let Circuit = Races[0]["Circuit"];
 	let { Driver, Constructor, grid, Time } = Races[0]["Results"][0];
-	const DriverImg = await searchImage(Driver.url, PlaceholderDriver);
+	const DriverImg = await searchImage(Driver.url, PlaceholderDriver, false);
 	const ConstructorImg = await searchImage(
 		Constructor.url,
-		PlaceholderConstructor
+		PlaceholderConstructor,
+		false
 	);
-	const CircuitImg = await searchImage(Circuit.url, PlaceholderTrack);
+	const CircuitImg = await searchImage(Circuit.url, PlaceholderTrack, true);
 	return {
 		Driver: { ...Driver, img: DriverImg },
 		Constructor: { ...Constructor, img: ConstructorImg },

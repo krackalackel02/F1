@@ -3,25 +3,25 @@ import Loading from "./Loading.jsx";
 import Placeholder from "./assets/placeholder_track.jpg";
 import CircleWithText from "./CircleWithText";
 import styles from "./Races.module.css";
-
- export async function searchImage(searchTerm,fallback) {
-	try {
-		const wikipedia = searchTerm;
-		const wikipediaTitle = wikipedia.match(/\/wiki\/(.+)/)[1];
-		const apiUrl = `https://en.wikipedia.org/w/api.php?action=query&titles=${encodeURIComponent(
-			wikipediaTitle
-		)}&prop=pageimages&format=json&pithumbsize=1000&origin=*`;
-		const link = await fetch(apiUrl, { mode: "cors" });
-		const data = await link.json();
-		const pageData = data.query.pages;
-		const pageId = Object.keys(pageData)[0];
-		const imageUrl = pageData[pageId].thumbnail.source;
-		if (!imageUrl) return fallback;
-		return imageUrl;
-	} catch (error) {
-		return fallback;
-	}
-}
+import searchImage from "./seachImage.js";
+//  export async function searchImage(searchTerm,fallback) {
+// 	try {
+// 		const wikipedia = searchTerm;
+// 		const wikipediaTitle = wikipedia.match(/\/wiki\/(.+)/)[1];
+// 		const apiUrl = `https://en.wikipedia.org/w/api.php?action=query&titles=${encodeURIComponent(
+// 			wikipediaTitle
+// 		)}&prop=pageimages&format=json&pithumbsize=1000&origin=*`;
+// 		const link = await fetch(apiUrl, { mode: "cors" });
+// 		const data = await link.json();
+// 		const pageData = data.query.pages;
+// 		const pageId = Object.keys(pageData)[0];
+// 		const imageUrl = pageData[pageId].thumbnail.source;
+// 		if (!imageUrl) return fallback;
+// 		return imageUrl;
+// 	} catch (error) {
+// 		return fallback;
+// 	}
+// }
 
 const formatDate = (dateString) => {
 	const date = new Date(dateString);
@@ -73,7 +73,7 @@ export default function Races({
 		const fetchRaceData = async () => {
 			const raceList = await Promise.all(
 				raceTable["Races"].map(async (race) => {
-					const img = await searchImage(race["Circuit"]["url"],Placeholder);
+					const img = await searchImage(race["Circuit"]["url"],Placeholder,true);
 					let isAfterTimeProp = false;
 					const events = Object.entries(race).reduce((acc, [key, value]) => {
 						if (key === "time") {
