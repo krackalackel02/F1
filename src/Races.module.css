@@ -1,25 +1,3 @@
-.rotating {
-	animation: rotateAnimation 1s infinite linear;
-}
-.loading-wrapper {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	padding: 30px;
-	height: 100%;
-}
-.loading-wrapper img {
-	width: clamp(300px, 30vw, 500px);
-}
-@keyframes rotateAnimation {
-	from {
-		transform: rotate(0deg);
-	}
-	to {
-		transform: rotate(360deg);
-	}
-}
-
 .race-card {
 	--card-width: clamp(200px, 30vw, 300px);
 	--icon-width: clamp(50px, 1vw, 70px);
@@ -128,8 +106,5 @@
 	.race-card {
 		--card-width: clamp(300px, 80vw, 400px);
 		aspect-ratio: auto;
-	}
-	.loading-wrapper img {
-		width: clamp(250px, 50vw, 350px);
 	}
 }

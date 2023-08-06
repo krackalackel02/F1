@@ -25,7 +25,18 @@ export default function Content({
 						return <Home />;
 
 					case "drivers":
-						return <Drivers />;
+						return (
+							<Drivers
+								season={season}
+								setSeason={setSeason}
+								activeTab={activeTab}
+								setActiveTab={setActiveTab}
+								activeRace={activeRace} // This line is missing in your code
+								setActiveRace={setActiveRace}
+								loading={loading}
+								setLoading={setLoading}
+							/>
+						);
 
 					case "circuits":
 						return <Circuits />;
