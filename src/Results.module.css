@@ -4,42 +4,64 @@
 	font-size: var(--heading-font-size);
 }
 
-.winner-card {
+.Track {
 	--card-width: clamp(300px, 90vw, 450px);
 	--icon-width: clamp(75px, 1vw, 100px);
 	--card-padding: 20px;
 	--border-radius: calc(0.5 * var(--icon-width));
 	--card-heading-font-size: 3rem;
 	--brightness-value: 0.5;
-	padding: var(--card-padding);
-	flex-direction: row;
-	display: flex;
-	row-gap: var(--card-padding);
-	margin: 0 auto;
 	position: relative;
-	width: var(--card-width);
+	padding: var(--card-padding);
+	margin: 0 auto;
 	border-radius: var(--border-radius);
-	background-color: rgba(
-		calc(var(--brightness-value) * 0.25 * 255),
-		calc(var(--brightness-value) * 0.25 * 255),
-		calc(var(--brightness-value) * 0.25 * 255),
-		0.5
-	);
+	background-color: rgba(calc(1 * 255), calc(1 * 255), calc(1 * 255), 0.5);
 	isolation: isolate;
 	color: white;
 }
-.Winner {
-	display: flex;
-	flex-direction: column;
-	flex-grow: 1;
-}
-.winner-card > img {
+.Track > img {
+	border-radius: var(--border-radius);
 	position: absolute;
 	top: 0;
 	left: 0;
 	object-fit: fill;
 	height: 100%;
 	width: 100%;
+	z-index: -1;
+}
+.winner-card {
+	padding: var(--card-padding);
+	display: flex;
+	row-gap: var(--card-padding);
+	margin: 0 auto;
+	position: relative;
+	width: var(--card-width);
+	border-radius: var(--border-radius);
+	background-color: white;
+	isolation: isolate;
+	color: black;
+	border: 2px solid black;
+}
+.Winner {
+	flex-grow: 1;
+	position: relative;
+	border-radius: var(--border-radius);
+	background-color: rgba(
+		calc(var(--brightness-value) * 255),
+		calc(var(--brightness-value) * 255),
+		calc(var(--brightness-value) * 255),
+		0.5
+	);
+}
+.Winner > img {
+	border-radius: var(--border-radius);
+	position: absolute;
+	top: 0;
+	left: 0;
+	object-fit: fill;
+	height: 100%;
+	width: 100%;
+	opacity: 0.8;
 	filter: brightness(var(--brightness-value));
 	z-index: -1;
 }
@@ -88,7 +110,18 @@
 .Driver,
 .Constructor {
 	display: flex;
+	flex-grow: 1;
 }
-.Data{
+.Data {
 	flex-grow: 0;
+}
+
+.winner-card:nth-of-type(1) .Driver-Profile > img {
+	border: 2px solid gold;
+}
+.winner-card:nth-of-type(2) .Driver-Profile > img {
+	border: 2px solid silver;
+}
+.winner-card:nth-of-type(3) .Driver-Profile > img {
+	border: 2px solid #cd7f32;
 }

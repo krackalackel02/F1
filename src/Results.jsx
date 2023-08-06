@@ -30,6 +30,67 @@ async function findWinningDriver(dataCurrent) {
 		Circuit: { ...Circuit, img: CircuitImg },
 	};
 }
+async function findPodiumDrivers(dataCurrent, setTrackImg) {
+	const data = dataCurrent["MRData"];
+	const numDrivers = data["total"];
+	const raceTable = data["RaceTable"];
+	const Races = raceTable["Races"];
+	if (!Races.length > 0) return {};
+	let Circuit = Races[0]["Circuit"];
+	let [Gold, Silver, Bronze] = Races[0]["Results"].slice(0, 3);
+	const CircuitImg = await searchImage(Circuit.url, PlaceholderTrack, true);
+	setTrackImg(CircuitImg);
+	let GoldDriverImg = await searchImage(
+		Gold.Driver.url,
+		PlaceholderDriver,
+		false
+	);
+	let SilverDriverImg = await searchImage(
+		Silver.Driver.url,
+		PlaceholderDriver,
+		false
+	);
+	let BronzeDriverImg = await searchImage(
+		Bronze.Driver.url,
+		PlaceholderDriver,
+		false
+	);
+	let GoldConstructorImg = await searchImage(
+		Gold.Constructor.url,
+		PlaceholderConstructor,
+		false
+	);
+	let SilverConstructorImg = await searchImage(
+		Silver.Constructor.url,
+		PlaceholderConstructor,
+		false
+	);
+	let BronzeConstructorImg = await searchImage(
+		Bronze.Constructor.url,
+		PlaceholderConstructor,
+		false
+	);
+	return [
+		{
+			...Gold,
+			Driver: { ...Gold.Driver, img: GoldDriverImg },
+			Constructor: { ...Gold.Constructor, img: GoldConstructorImg },
+			Circuit: { ...Gold.Circuit, img: CircuitImg },
+		},
+		{
+			...Silver,
+			Driver: { ...Silver.Driver, img: SilverDriverImg },
+			Constructor: { ...Silver.Constructor, img: SilverConstructorImg },
+			Circuit: { ...Gold.Circuit, img: CircuitImg },
+		},
+		{
+			...Bronze,
+			Driver: { ...Bronze.Driver, img: BronzeDriverImg },
+			Constructor: { ...Bronze.Constructor, img: BronzeConstructorImg },
+			Circuit: { ...Gold.Circuit, img: CircuitImg },
+		},
+	];
+}
 
 async function getRoundLength(season, setActiveRace, activeRaceRef, round) {
 	try {
@@ -59,6 +120,9 @@ export default function Results({
 }) {
 	const [round, setRound] = useState(1);
 	const [result, setResult] = useState(null);
+	const [trackImg, setTrackImg] = useState(
+		"//upload.wikimedia.org/wikipedia/commons/thumb/2/29/Bahrain_International_Circuit--Grand_Prix_Layout.svg/250px-Bahrain_International_Circuit--Grand_Prix_Layout.svg.png"
+	);
 	const activeRaceRef = useRef(activeRace);
 	const prevSeason = useRef(activeRace.season);
 	const prevRound = useRef(activeRace.round);
@@ -83,18 +147,27 @@ export default function Results({
 					)
 						.then((res) => res.json())
 						.then((result) => {
-							findWinningDriver(result).then((RESULT) => {
-								setResult(JSON.stringify(RESULT, null, 2));
-								setResult(RESULT);
-								setLoading(false);
-							});
-
-							prevSeason.current = activeRace.season;
-							prevRound.current = activeRace.round;
+							findPodiumDrivers(result, setTrackImg)
+								.then((result) => {
+									setResult(result);
+									prevSeason.current = activeRace.season;
+									prevRound.current = activeRace.round;
+									setLoading(false);
+								})
+								.catch((err) => {
+									console.error(err);
+									setLoading(false);
+								});
+							// findWinningDriver(result).then((RESULT) => {
+							// 	setResult(JSON.stringify(RESULT, null, 2));
+							// 	setResult(RESULT);
+							// 	setLoading(false);
+							// 	prevSeason.current = activeRace.season;
+							// 	prevRound.current = activeRace.round;
+							// });
 						})
 						.catch((err) => {
 							console.error(err);
-							setLoading(false);
 						});
 				})
 				.catch((error) => console.error("Error setting season length:", error));
@@ -112,13 +185,24 @@ export default function Results({
 		)
 			.then((res) => res.json())
 			.then((result) => {
-				findWinningDriver(result).then((RESULT) => {
-					setResult(JSON.stringify(RESULT, null, 2));
-					setResult(RESULT);
-					setLoading(false);
-				});
-				prevSeason.current = activeRace.season;
-				prevRound.current = activeRace.round;
+				findPodiumDrivers(result, setTrackImg)
+					.then((result) => {
+						setResult(result);
+						prevSeason.current = activeRace.season;
+						prevRound.current = activeRace.round;
+						setLoading(false);
+					})
+					.catch((err) => {
+						console.error(err);
+						setLoading(false);
+					});
+				// findWinningDriver(result).then((RESULT) => {
+				// 	setResult(JSON.stringify(RESULT, null, 2));
+				// 	setResult(RESULT);
+				// 	setLoading(false);
+				// });
+				// prevSeason.current = activeRace.season;
+				// prevRound.current = activeRace.round;
 			})
 			.catch((err) => {
 				console.error(err);
@@ -190,41 +274,60 @@ export default function Results({
 				{!loading ? (
 					result && Object.keys(result).length > 0 ? (
 						<>
-							<pre>{JSON.stringify(result, null, 2)}</pre>
-							<div className={styles["winner-card"]}>
-								<img
-									src={result.Circuit.img}
-									alt=""
-									className={styles["Circuit"]}
-								/>
-								<div className="Winner">
-									<div className={styles["Driver"]}>
-										<div className={styles["Driver-Profile"]}>
-											<img src={result.Driver.img} alt="" />
-										</div>
-										<div className={styles["Driver-Content"]}>
-											<div className={styles["winner-type"]}>Driver:</div>
-											<div className={styles["winner-name"]}>
-												{result.Driver.givenName + " " + result.Driver.familyName}
+							{/* <pre>{JSON.stringify(result, null, 2)}</pre> */}
+							<div className={styles["Track"]}>
+								<img src={trackImg} alt="" className={styles["Circuit"]} />
+								{result.map((winner) => {
+									return (
+										<div
+											className={styles["winner-card"]}
+											key={winner.Driver.url}
+										>
+											<div className={styles["Winner"]}>
+												<img src={winner.Constructor.img} alt="" />
+												<div className={styles["Driver"]}>
+													<div className={styles["Driver-Profile"]}>
+														<img src={winner.Driver.img} alt="" />
+													</div>
+													<div className={styles["Driver-Content"]}>
+														<div className={styles["winner-type"]}>Driver:</div>
+														<div className={styles["winner-name"]}>
+															{winner.Driver.givenName +
+																" " +
+																winner.Driver.familyName}
+														</div>
+														<div className={styles["Constructor-Content"]}>
+															<div className={styles["winner-type"]}>
+																Constructor:
+															</div>
+															<div className={styles["winner-name"]}>
+																{winner.Constructor.name}
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div className={styles["Data"]}>
+												<div className={styles["Data-Content"]}>
+													<div>
+														<div className={styles["winner-type"]}>Time:</div>
+														<div className={styles["winner-name"]}>
+															{winner.Time.time}
+														</div>
+													</div>
+													<div>
+														<div className={styles["winner-type"]}>
+															Starting Grid:
+														</div>
+														<div className={styles["winner-name"]}>
+															{winner.grid}
+														</div>
+													</div>
+												</div>
 											</div>
 										</div>
-									</div>
-									<div className={styles["Constructor"]}>
-										<div className={styles["Constructor-Profile"]}>
-											<img src={result.Constructor.img} alt="" />
-										</div>
-										<div className={styles["Constructor-Content"]}>
-											<div className={styles["winner-type"]}>Constructor:</div>
-											<div className={styles["winner-name"]}>{result.Constructor.name}</div>
-										</div>
-									</div>
-								</div>
-								<div className="Data">
-								<div className={styles["Data-Content"]}>
-											<div className={styles["winner-type"]}>Time:</div>
-											<div className={styles["winner-name"]}>{result.Time.time}</div>
-										</div>
-								</div>
+									);
+								})}
 							</div>
 						</>
 					) : (
