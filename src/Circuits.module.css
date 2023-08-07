@@ -1,0 +1,117 @@
+.circuit-card {
+	--card-width: clamp(200px, 30vw, 300px);
+	--icon-width: clamp(50px, 1vw, 70px);
+	--card-padding: 20px;
+	--border-radius: calc(0.5 * var(--icon-width));
+	--card-heading-font-size: 3rem;
+	--brightness-value: 0.5;
+	position: relative;
+	width: var(--card-width);
+	height: auto;
+	aspect-ratio: 2/3;
+	color: white;
+	background-color: transparent;
+	background-color: rgba(
+		calc(1 * 255),
+		calc(1 * 255),
+		calc(1 * 255),
+		0.7
+	);
+	border-radius: var(--border-radius);
+	isolation: isolate;
+	flex-grow: 0;
+}
+
+.circuit-card-image {
+	border-radius: var(--border-radius);
+	max-width: 100%;
+	display: block;
+	position: absolute;
+	inset: 0;
+	top: 0;
+	left: 0;
+	object-fit: cover;
+	width: 100%;
+	height: 100%;
+	filter: brightness(var(--brightness-value));
+	z-index: -1;
+}
+
+.card-list {
+	display: flex;
+	row-gap: 30px;
+	column-gap: 20px;
+	flex-wrap: wrap;
+	justify-content: center;
+	align-items: center;
+	padding: 30px;
+}
+.circuit-header,
+.circuit-header select {
+	--heading-font-size: 4rem;
+	font-size: var(--heading-font-size);
+}
+.circuit-card-title {
+	display: flex;
+	align-items: center;
+	position: relative;
+	padding-bottom: var(--card-padding);
+}
+.circuit-card-title::after {
+	content: "";
+	position: absolute;
+	left: calc(var(--card-padding) * -0.5);
+	height: 100%;
+	height: calc(100% + var(--card-padding) * 0.5);
+	width: calc(100% + var(--card-padding) * 0.5);
+	background-color: hsla(0, 0%, 0%, 0.783);
+	border-radius: var(--border-radius);
+	z-index: -1;
+}
+.circuit-card-title span {
+	font-size: calc(0.5 * var(--card-heading-font-size));
+	padding: 0 var(--card-padding);
+	max-width: calc(
+		var(--card-width) - var(--icon-width) - 3.5 * var(--card-padding)
+	);
+	word-wrap: break-word;
+}
+.circuit-card h3 {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	font-size: calc(0.5 * var(--card-heading-font-size));
+}
+
+.circuit-card-content {
+	padding: var(--card-padding);
+}
+.circuit-card-details {
+	color: black;
+}
+@media screen and (max-width: 700px) {
+	.circuit-card {
+		--card-width: clamp(300px, 80vw, 400px);
+		aspect-ratio: auto;
+	}
+}
+.Driver-Profile {
+	height: 75px;
+	width: 75px;
+	aspect-ratio: 1;
+	position: relative;
+	border-radius: 50%;
+	background-color: white;
+}
+.circuit-card > img {
+	position: absolute;
+	top: 0;
+	left: 0;
+	object-fit: cover;
+	height: 100%;
+	width: 100%;
+	flex-grow: 0;
+    opacity: var(--brightness-value);
+	border-radius: var(--border-radius);
+    z-index: -1;
+}

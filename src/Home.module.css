@@ -1,0 +1,30 @@
+.home-content {
+	max-width: 800px;
+	margin: 0 auto;
+	padding: 20px;
+	line-height: 1.6;
+	color: #333;
+}
+
+.home-content h1 {
+	text-align: center;
+	color: #444;
+	margin-bottom: 20px;
+}
+
+.home-content p {
+	margin-bottom: 20px;
+}
+
+.home-content ul {
+	margin-left: 20px;
+	margin-bottom: 20px;
+}
+
+.home-content ul li {
+	margin-bottom: 10px;
+}
+
+.home-content strong {
+	color: #555;
+}

@@ -101,7 +101,7 @@ export default function Drivers({
 										<img src={driver.img} alt="" />
 									</div>
 									<span>
-										{driver.name} [{driver.code && driver.code}]
+										{driver.name} {(driver.code && driver.code !== "") && <span>[{driver.code}]</span>}
 									</span>
 								</h3>
 								<div className={styles["driver-card-details"]}>
