@@ -95,36 +95,36 @@ export default function Drivers({
 				<div className={styles["card-list"]}>
 					{drivers.map((driver) => (
 						<div key={driver.name} className={styles["driver-card"]}>
-							<img
-								src={driver.img}
-								alt=""
-								className={styles["driver-card-image"]}
-							/>
 							<div className={styles["driver-card-content"]}>
 								<h3 className={styles["driver-card-title"]}>
-									<span>{driver.name}</span>
+									<div className={styles["Driver-Profile"]}>
+										<img src={driver.img} alt="" />
+									</div>
+									<span>
+										{driver.name} [{driver.code && driver.code}]
+									</span>
 								</h3>
-								<div>
-									{/* Iterate through each event and display its details */}
-									{Object.entries(driver)
-										.filter(
-											([key, value]) =>
-												key.startsWith(
-													"event"
-												) /* Placeholder condition, adapt as needed */
-										)
-										.map(([eventKey, eventValue]) => {
-											const formattedEventKey = eventKey
-												.replace(/([A-Z])/g, " $1")
-												.trim();
+								<div className={styles["driver-card-details"]}>
+									<div>DOB - {driver.dateOfBirth}</div>
+									<div>Nationality - {driver.nationality}</div>
+									{driver.permanentNumber && (
+										<div>Driver Number - {driver.permanentNumber}</div>
+									)}
+									<div>
+										Bio found <a href={driver.url}>here</a>
+									</div>
+									{/* {Object.entries(driver).map(([eventKey, eventValue]) => {
+										const formattedEventKey = eventKey
+											.replace(/([A-Z])/g, " $1")
+											.trim();
 
-											return (
-												<div key={eventKey}>
-													<h5>{formattedEventKey}</h5>
-													<p>Value: {eventValue}</p>
-												</div>
-											);
-										})}
+										return (
+											<div key={eventKey}>
+												<h5>{formattedEventKey}</h5>
+												<p>Value: {eventValue}</p>
+											</div>
+										);
+									})} */}
 								</div>
 							</div>
 						</div>
