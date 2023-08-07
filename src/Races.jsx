@@ -154,7 +154,7 @@ export default function Races({
 								<h4>
 									Track: <div>{race.circuit}</div>
 								</h4>
-								<div>
+								<div className={styles["race-card-details"]}>
 									{/* Iterate through each event and display its details */}
 									{Object.entries(race.events).map(([eventKey, eventValue]) => {
 										const formattedEventKey = eventKey
@@ -184,6 +184,7 @@ export default function Races({
 								</div>
 								<div className={styles["results"]}>
 									<button
+									className="btn btn-primary"
 										onClick={() => {
 											setActiveRace({
 												...activeRace,

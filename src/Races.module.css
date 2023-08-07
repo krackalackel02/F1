@@ -12,10 +12,10 @@
 	color: white;
 	background-color: transparent;
 	background-color: rgba(
-		calc(var(--brightness-value) * 255),
-		calc(var(--brightness-value) * 255),
-		calc(var(--brightness-value) * 255),
-		0.3
+		calc(var(--brightness-value) * 0.25 * 255),
+		calc(var(--brightness-value) * 0.25 * 255),
+		calc(var(--brightness-value) * 0.25 * 255),
+		0.5
 	);
 	border-radius: var(--border-radius);
 	isolation: isolate;
@@ -33,6 +33,7 @@
 	object-fit: cover;
 	width: 100%;
 	height: 100%;
+	opacity: var(--brightness-value);
 	filter: brightness(var(--brightness-value));
 	z-index: -1;
 }
@@ -78,6 +79,8 @@
 .race-card-title span {
 	font-size: calc(0.5 * var(--card-heading-font-size));
 	margin-left: var(--icon-width);
+}
+.race-card-details{
 }
 .race-card h4 {
 	display: flex;

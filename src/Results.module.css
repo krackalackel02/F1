@@ -64,11 +64,12 @@
 	position: relative;
 	border-radius: var(--border-radius);
 	background-color: rgba(
-		calc(var(--brightness-value) * 255),
-		calc(var(--brightness-value) * 255),
-		calc(var(--brightness-value) * 255),
+		calc(var(--brightness-value) * 0.25 * 255),
+		calc(var(--brightness-value) * 0.25 * 255),
+		calc(var(--brightness-value) * 0.25 * 255),
 		0.5
 	);
+	color: white;
 }
 .Winner > img {
 	border-radius: var(--border-radius);
@@ -78,7 +79,7 @@
 	object-fit: fill;
 	height: 100%;
 	width: 100%;
-	opacity: 0.8;
+	opacity: 0.5;
 	filter: brightness(var(--brightness-value));
 	z-index: -1;
 }
