@@ -48,8 +48,14 @@
 }
 .circuit-header,
 .circuit-header select {
-	--heading-font-size: 4rem;
+	--heading-font-size: 2.5rem;
 	font-size: var(--heading-font-size);
+}
+.circuit-header {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	column-gap: 5px;
 }
 .circuit-card-title {
 	display: flex;

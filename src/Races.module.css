@@ -48,8 +48,14 @@
 }
 .race-header,
 .race-header select {
-	--heading-font-size: 4rem;
+	--heading-font-size: 2.5rem;
 	font-size: var(--heading-font-size);
+}
+.race-header {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	column-gap: 5px;
 }
 .race-card-title {
 	display: flex;

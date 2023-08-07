@@ -1,9 +1,14 @@
 .results-header,
 .results-header select {
-	--heading-font-size: 3rem;
+	--heading-font-size: 2.5rem;
 	font-size: var(--heading-font-size);
 }
-
+.results-header {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	column-gap: 5px;
+}
 .Track {
 	--card-width: clamp(300px, 90vw, 450px);
 	--icon-width: clamp(75px, 1vw, 100px);
@@ -12,12 +17,24 @@
 	--card-heading-font-size: 3rem;
 	--brightness-value: 0.5;
 	position: relative;
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	gap: 20px;
 	padding: var(--card-padding);
 	margin: 0 auto;
 	border-radius: var(--border-radius);
 	background-color: rgba(calc(1 * 255), calc(1 * 255), calc(1 * 255), 0.5);
 	isolation: isolate;
 	color: white;
+}
+@media screen and (max-width: 700px) {
+	.Track {
+		flex-direction: column;
+	}
+}
+.results-wrapper {
+	padding: 50px;
 }
 .Track > img {
 	border-radius: var(--border-radius);

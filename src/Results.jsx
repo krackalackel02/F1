@@ -225,7 +225,7 @@ export default function Results({
 	}
 
 	return (
-		<div>
+		<div >
 			<h2 className={styles["results-header"]}>
 				<span>Season:</span>
 				<select
@@ -270,7 +270,7 @@ export default function Results({
 					))}
 				</select>
 			</h2>
-			<div>
+			<div className={styles["results-wrapper"]}>
 				{!loading ? (
 					result && Object.keys(result).length > 0 ? (
 						<>

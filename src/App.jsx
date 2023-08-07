@@ -29,7 +29,7 @@ export default function App() {
 		<div className={styles.container}>
 			<Header />
 			<main>
-				<Sidebar setActiveTab={setActiveTab} />
+				<Sidebar activeTab={activeTab} setActiveTab={setActiveTab} />
 				<Content
 					activeTab={activeTab}
 					setActiveTab={setActiveTab}
