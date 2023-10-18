@@ -172,7 +172,7 @@ export default function Results({
 				})
 				.catch((error) => console.error("Error setting season length:", error));
 		}
-	}, [activeRace]);
+	}, [activeRace.season, activeRace.round]);
 
 	useEffect(() => {
 		activeRaceRef.current = activeRace;
